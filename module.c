@@ -34,10 +34,11 @@ double Time[countElements];
 int Coord[countElements];
 static short Coordinate = 0;	
 static short saveWay = 0;	
-int count = 0;			
+int count = 0;
+int countS = -11;
 struct timeval start;	
 struct timeval timevals[countElements];	
-int stopReadFromPipe = 100000;	
+int stopReadFromPipe = 300000;	
 char readbuffer[countBuf];	
 char bufe[countBuf];	
 char Channel = 'o';		
@@ -122,6 +123,19 @@ getCurrentCoordinate ()
   sprintf (out, "%d\n", Coordinate);
   fputs (out, stdout);
   fflush(stdout);
+}
+
+void
+checkStopped ()
+{		
+  if(abs(countS-count) <=10){
+  typeWork=Pause;
+  lastWorks=Complete;
+  sprintf (out, "%d\n", Coordinate);
+  fputs (out, stdout);
+  fflush(stdout);
+  }
+countS=count;
 }
 
 void
@@ -254,7 +268,7 @@ void callback(int way)
 	              if(pendOffsetNow<=Coordinate){
 	              typeWork=Pause;
 		      lastWorks=Complete;
-	              last();
+	              checkStopped();
 	              Mah=true;
 	              }
 		      else{
@@ -355,6 +369,9 @@ int main ()
 	    pendOffset = atoi (bufe);
 
 
+	  }
+	  if(typeWork = Ready || typeWork = Write){
+	   checkStopped ();	  
 	  }
 	  usleep (stopReadFromPipe);	
 
