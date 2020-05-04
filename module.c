@@ -131,7 +131,12 @@ checkStopped ()
   if(abs(countS-count) <=10){
   typeWork=Pause;
   lastWorks=Complete;
-  sprintf (out, "%d\n", Coordinate);
+  timevalToDouble ();
+  n = sprintf (out, "%f\n", (Time[count-2]-times));
+  fputs (out, stdout);
+  fflush(stdout);
+
+  n = sprintf (out, "%d\n", Coord[count-2]);
   fputs (out, stdout);
   fflush(stdout);
   }
@@ -268,7 +273,14 @@ void callback(int way)
 	              if(pendOffsetNow<=Coordinate){
 	              typeWork=Pause;
 		      lastWorks=Complete;
-	              checkStopped();
+	              timevalToDouble ();
+                      n = sprintf (out, "%f\n", (Time[count-2]-times));
+                      fputs (out, stdout);
+                      fflush(stdout);
+
+                      n = sprintf (out, "%d\n", Coord[count-2]);
+                      fputs (out, stdout);
+                      fflush(stdout);
 	              Mah=true;
 	              }
 		      else{
