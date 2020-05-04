@@ -382,7 +382,7 @@ int main ()
 
 
 	  }
-	  if(typeWork = Ready || typeWork = Write){
+	  if(typeWork == Ready || typeWork == Write){
 	   checkStopped ();	  
 	  }
 	  usleep (stopReadFromPipe);	
